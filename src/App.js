@@ -101,17 +101,21 @@ function App() {
       },
       axiosConfig
       )
-      .then((response) => {
-
+      .then((res) => {
+        console.log(res)
+        setChats([
+          ...chats,
+          userTextResponse,
+          res.data
+        ])
       })
       .catch((err) => {
-
+        setChats([
+          ...chats,
+          userTextResponse,
+          err
+        ])
       })
-
-    setChats([
-      ...chats,
-      userTextResponse
-    ])
   }
 
   return (
