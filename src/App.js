@@ -40,7 +40,8 @@ const useStyles = makeStyles((theme) => ({
   chats: {
     padding: '1rem',
     backgroundColor: '#eee',
-    height: '80%'
+    height: '80%',
+    overflow: 'scroll-y'
   },
   userTextInput: {
     padding: '.5rem',
@@ -83,7 +84,7 @@ function App() {
   const classes = useStyles();
 
   const [userTextResponse, setuserTextResponse] = useState();
-  const [chats, setChats] = useState(["Hi, I am Sam your Retail Virtual Agent. How can I help you today?", "asf"]);
+  const [chats, setChats] = useState(["Hi, I am Sam your Retail Virtual Agent. How can I help you today?"]);
   
   const handleUserResponse = () => {
     
