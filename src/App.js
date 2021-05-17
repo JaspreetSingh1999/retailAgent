@@ -3,6 +3,7 @@ import './App.css';
 
 import {React, useState} from 'react';
 import clsx from 'clsx';
+import axios from 'axios';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -85,6 +86,15 @@ function App() {
   const [chats, setChats] = useState(["Hi, I am Sam your Retail Virtual Agent. How can I help you today?", "asf"]);
   
   const handleUserResponse = () => {
+    
+    axios.get('')
+      .then((response) => {
+
+      })
+      .catch((err) => {
+        
+      })
+
     setChats([
       ...chats,
       userTextResponse
