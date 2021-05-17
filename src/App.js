@@ -87,12 +87,25 @@ function App() {
   
   const handleUserResponse = () => {
     
-    axios.get('')
+    let axiosConfig = {
+      headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          "Access-Control-Allow-Origin": "true",
+      }
+    };
+
+    axios.post(
+      'https://1d2698554102.ngrok.io/query', 
+      {
+        userTextResponse: userTextResponse
+      },
+      axiosConfig
+      )
       .then((response) => {
 
       })
       .catch((err) => {
-        
+
       })
 
     setChats([
