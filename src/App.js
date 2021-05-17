@@ -2,10 +2,18 @@ import logo from './logo.svg';
 import './App.css';
 
 import {React, useState} from 'react';
+import clsx from 'clsx';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import SendRoundedIcon from '@material-ui/icons/SendRounded';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold'
   },
   chats: {
-    padding: '.5rem',
+    padding: '1rem',
     backgroundColor: '#eee',
     height: '80%'
   },
@@ -44,12 +52,44 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
+  margin: {
+    margin: theme.spacing(1),
+  },
+  withoutLabel: {
+    marginTop: theme.spacing(3),
+  },
+  textField: {
+    // width: '25ch',
+  },
+  userChat: {
+    padding: '.5rem',
+    borderRadius: '.3rem',
+    backgroundColor: '#fff',
+    textAlign: 'right',
+    marginBottom: '.5rem'
+  },
+  agentChat: {
+    padding: '.5rem',
+    borderRadius: '.3rem',
+    backgroundColor: 'rgba(0,256,0,.8)',
+    textAlign: 'left',
+    marginBottom: '.5rem'
+  }
 }));
+
 
 function App() {
   const classes = useStyles();
 
   const [userTextResponse, setuserTextResponse] = useState();
+  const [chats, setChats] = useState(["Hi, I am Sam your Retail Virtual Agent. How can I help you today?", "asf"]);
+  
+  const handleUserResponse = () => {
+    setChats([
+      ...chats,
+      userTextResponse
+    ])
+  }
 
   return (
     <div className={classes.root}>
@@ -61,14 +101,45 @@ function App() {
               Retail Agent
             </header>
             <div className={classes.chats}>
-              Hi, I am Sam your Retail Virtual Agent. How can I help you today?
+              {
+                chats.length != 0
+                ?
+                chats.map((chat, i) => {
+                  if ((i % 2) != 0)
+                    return <div style={{textAlign: 'right', marginBottom: '2rem'}}><span className={classes.userChat}>{chat}</span></div>
+                  else 
+                    return <div><span className={classes.agentChat}>{chat}</span></div>
+                })
+                :
+                ''
+              }
             </div>
-            <TextField 
+            <FormControl 
+              className={clsx(classes.margin, classes.textField, classes.userTextInput)}>
+              <InputLabel htmlFor="standard-adornment-password">Your Response</InputLabel>
+              <Input
+                id="standard-adornment-password"
+                type='text'
+                value={userTextResponse}
+                onChange={(event) => {setuserTextResponse(event.target.value)}}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="Send"
+                      onClick={handleUserResponse}
+                    >
+                      <SendRoundedIcon></SendRoundedIcon>
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+            {/* <TextField 
               id="standard-basic" 
               label="Your Response"
               className={classes.userTextInput}
               value={userTextResponse}
-              onChange={(event) => {setuserTextResponse(event.target.value)}} />
+              onChange={(event) => {setuserTextResponse(event.target.value)}} /> */}
           {/* </Grid> */}
         </form>
         </Grid>
