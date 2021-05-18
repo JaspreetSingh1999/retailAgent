@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '1rem',
     backgroundColor: '#eee',
     height: '80%',
-    overflow: 'scroll-y'
+    overflow: 'auto'
   },
   userTextInput: {
     padding: '.5rem',
@@ -69,14 +69,11 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '.3rem',
     backgroundColor: '#fff',
     textAlign: 'right',
-    marginBottom: '.5rem'
+    marginTop: '1rem'
   },
   agentChat: {
-    padding: '.5rem',
-    borderRadius: '.3rem',
-    backgroundColor: 'rgba(0,256,0,.8)',
-    textAlign: 'left',
-    marginBottom: '.5rem'
+    lineHeight: '1.2rem',
+    marginBottom: '2rem'
   }
 }));
 
@@ -85,7 +82,20 @@ function App() {
   const classes = useStyles();
 
   const [userTextResponse, setuserTextResponse] = useStateWithCallbackLazy();
-  const [chats, setChats] = useStateWithCallbackLazy(["Hi, I am Sam your Retail Virtual Agent. How can I help you today?"]);
+  const [chats, setChats] = useStateWithCallbackLazy(
+    [
+    "Hi, I am Sam your Retail Virtual Agent. How can I help you today?",
+    'Hi, I would like to know my credit card bill.',
+    'Sure. Can you please provide me your registered phone number?',
+    'Yes, it’s 9999912345',
+    'Thanks, You will receive an OTP number which is sent to your registered phone number. Can you please confirm that as well?', 
+    'Yeah it’s 432210',
+    'Great! Lastly, can you please confirm your zip code?',  
+    'Sure, it’s 01752',
+    'Is there anything else can I help you with?', 
+    'No, I am good.',
+    'Thank you for contacting us. Have a great day!'
+  ]);
   
   const handleUserResponse = () => {
     setChats([
@@ -133,7 +143,7 @@ function App() {
   return (
     <div className={classes.root}>
       <Grid container>
-        <Grid item xs={10} className={classes.chatBox}>
+        <Grid item sm={12} md={6} className={classes.chatBox}>
         <form className={`${classes.root} ${classes.form}`} noValidate autoComplete="off">
           {/* <Grid item xs={12}> */}
             <header className={classes.header}>
@@ -145,9 +155,9 @@ function App() {
                 ?
                 chats.map((chat, i) => {
                   if ((i % 2) != 0)
-                    return <div style={{textAlign: 'right', marginBottom: '2rem'}}><span className={classes.userChat}>{chat}</span></div>
+                    return <div style={{textAlign: 'right', marginBottom: '1rem'}}><span className={classes.userChat}>{chat}</span></div>
                   else 
-                    return <div><span className={classes.agentChat}>{chat}</span></div>
+                    return <div style={{padding: '.5rem', borderRadius: '.3rem', backgroundColor: 'rgba(0,256,0,.8)', marginBottom: '1rem'}}><span className={classes.agentChat}>{chat}</span></div>
                 })
                 :
                 ''
