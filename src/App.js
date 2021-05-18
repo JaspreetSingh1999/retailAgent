@@ -1,9 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
 
-import {React, useState} from 'react';
+import {React, useEffect, useState} from 'react';
 import clsx from 'clsx';
 import axios from 'axios';
+import { useStateWithCallbackLazy } from 'use-state-with-callback';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -83,11 +84,19 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   const classes = useStyles();
 
-  const [userTextResponse, setuserTextResponse] = useState();
-  const [chats, setChats] = useState(["Hi, I am Sam your Retail Virtual Agent. How can I help you today?"]);
+  const [userTextResponse, setuserTextResponse] = useStateWithCallbackLazy();
+  const [chats, setChats] = useStateWithCallbackLazy(["Hi, I am Sam your Retail Virtual Agent. How can I help you today?"]);
   
   const handleUserResponse = () => {
-    
+    setChats([
+      ...chats,
+      userTextResponse
+    ], () => {
+      sendQuery()
+    })
+  }
+
+  const sendQuery = () => {
     let axiosConfig = {
       headers: {
           'Content-Type': 'application/json;charset=UTF-8',
@@ -96,7 +105,7 @@ function App() {
     };
 
     axios.post(
-      'https://1d2698554102.ngrok.io/query', 
+      'https://fef3f7507ffd.ngrok.io/query', 
       {
         userTextResponse: userTextResponse
       },
@@ -108,13 +117,15 @@ function App() {
           ...chats,
           userTextResponse,
           res.data
-        ])
+        ], () => {
+          setuserTextResponse('');
+        })
       })
       .catch((err) => {
         setChats([
           ...chats,
           userTextResponse,
-          err
+          err.data
         ])
       })
   }
