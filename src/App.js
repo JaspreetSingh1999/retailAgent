@@ -84,17 +84,17 @@ function App() {
   const [userTextResponse, setuserTextResponse] = useStateWithCallbackLazy();
   const [chats, setChats] = useStateWithCallbackLazy(
     [
-    "Hi, I am Sam your Retail Virtual Agent. How can I help you today?",
-    'Hi, I would like to know my credit card bill.',
-    'Sure. Can you please provide me your registered phone number?',
-    'Yes, it’s 9999912345',
-    'Thanks, You will receive an OTP number which is sent to your registered phone number. Can you please confirm that as well?', 
-    'Yeah it’s 432210',
-    'Great! Lastly, can you please confirm your zip code?',  
-    'Sure, it’s 01752',
-    'Is there anything else can I help you with?', 
-    'No, I am good.',
-    'Thank you for contacting us. Have a great day!'
+    "Hi, I am Sam your Retail Virtual Agent. How can I help you today?"
+//     'Hi, I would like to know my credit card bill.',
+//     'Sure. Can you please provide me your registered phone number?',
+//     'Yes, it’s 9999912345',
+//     'Thanks, You will receive an OTP number which is sent to your registered phone number. Can you please confirm that as well?', 
+//     'Yeah it’s 432210',
+//     'Great! Lastly, can you please confirm your zip code?',  
+//     'Sure, it’s 01752',
+//     'Is there anything else can I help you with?', 
+//     'No, I am good.',
+//     'Thank you for contacting us. Have a great day!'
   ]);
   
   const handleUserResponse = () => {
@@ -115,7 +115,7 @@ function App() {
     };
 
     axios.post(
-      'https://fef3f7507ffd.ngrok.io/query', 
+      'https://retail-dialogflow-api.herokuapp.com/query', 
       {
         userTextResponse: userTextResponse
       },
